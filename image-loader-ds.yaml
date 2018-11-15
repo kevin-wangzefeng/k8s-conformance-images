@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: image-loader
+  labels:
+    app: image-loader
+spec:
+  selector:
+    matchLabels:
+      app: image-loader
+  template:
+    metadata:
+      labels:
+        app: image-loader
+    spec:
+      containers:
+      - name: loader
+        image: swr.cn-south-1.myhuaweicloud.com/kevin-wangzefeng/k8s-conformance-images:v0.0.1
+        volumeMounts:
+        - name: docker
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: docker
+        hostPath:
+          path: /var/run/docker.sock
